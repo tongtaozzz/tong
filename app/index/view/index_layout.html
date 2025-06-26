@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file="common/meta" /}
+</head>
+
+<body class="body light-theme">
+    <div class="fly-header">
+        <div class="layui-container">
+            <div class="fly-head layui-clear">
+                <a class="fly-logo" href="{:url('/')}">
+                    <h2>{$site.name}</h2>
+                </a>
+                <div class="navbar-toggle"><i class="iconfont icon-menu-line"></i></div> 
+            </div>
+
+            <div class="navbar-collapse layui-hide">
+                <ul class="layui-nav fly-nav layui-nav-right">
+                    <li class="layui-nav-item layui-this"><a href="{:url('/')}">首页</a></li>
+                    <li class="layui-nav-item fly-nav-user">
+                        <a class="fly-nav-avatar" href="javascript:;">
+                            <img src="{$user.avatar}">
+                            <cite class="layui-hide-xs">{$user.username}</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="{:url('user/index')}"><i class="iconfont icon-user-3-line"></i>用户中心</a></dd>
+                            <dd><a href="{:url('user/profile')}"><i class="iconfont icon-settings-4-line"></i>基本设置</a></dd>
+                            <hr style="margin: 5px 0;">
+                            <dd><a href="{:url('user/logout')}" style="text-align: center;">退出</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="layui-container fly-marginTop fly-user-main">
+        <div class="fly-aside">
+            <div class="fly-userinfo">
+                <div class="fly-avatar-img">
+                    <img class="fly-avatar" src="{$user.avatar}">
+                    {if $user.gender==1}
+                    <i class="layui-icon layui-icon-male"></i>
+                    {/if}
+                    {if $user.gender==2}
+                    <i class="layui-icon layui-icon-female"></i>
+                    {/if}
+                </div>
+                <p class="fly-username">{$user.username}</p>
+                <div class="layui-btn-group">
+                  <button type="button" class="layui-btn layui-btn-primary layui-border layui-btn-sm">余额 {$user.amount}</button>
+                  <button type="button" class="layui-btn layui-btn-primary layui-border layui-btn-sm">积分 {$user.point}</button>
+                </div>
+            </div>
+
+            <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user" lay-shrink="all">
+                {:hook('user_sidenav_before')}
+                <li class="layui-nav-item {:check_nav_active('user/index')}">
+                    <a href="{:url('user/index')}"><i class="iconfont icon-user-3-line"></i>&nbsp;用户中心</a>
+                </li>
+                <li class="layui-nav-item {:check_nav_active('user/profile')}">
+                    <a href="{:url('user/profile')}"><i class="iconfont icon-settings-4-line"></i>&nbsp;基本设置</a>
+                </li>
+                {if config('yzn.user_allow_vip')}
+                <li class="layui-nav-item {:check_nav_active('user/upgrade')}">
+                    <a href="{:url('user/upgrade')}"><i class="iconfont icon-vip-line"></i>&nbsp;开通会员</a>
+                </li>
+                {/if}
+                {:hook('user_sidenav_after')}
+            </ul>
+            <div class="site-tree-mobile layui-hide">
+                <i class="layui-icon">&#xe602;</i>
+            </div>
+            <div class="site-mobile-shade"></div>
+        </div>
+        <div class="fly-panel fly-panel-user" pad20>
+            {block name="main"}主内容{/block}
+        </div>
+    </div>
+    <footer class="fly-footer" style="clear:both">
+        <p class="copyright">Copyright&nbsp;©&nbsp;{:date("Y")} {$site.name} All Rights Reserved <a href="https://beian.miit.gov.cn" target="_blank">{$site.web_site_icp}</a></p>
+    </footer>
+    {include file="common/script" /}
+</body>
+
+</html>
